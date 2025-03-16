@@ -6,8 +6,10 @@ import UserBox from '@/components/shared/user-box'
 import { Button } from '@/components/ui/button'
 import { navLinks } from '@/constants'
 import { SignInButton, SignUpButton, SignedIn, SignedOut } from '@clerk/nextjs'
+import { LogIn } from 'lucide-react'
 import Link from 'next/link'
 import GlobalSearch from './global-search'
+import Mobile from './mobile'
 
 function Navbar() {
 	return (
@@ -15,7 +17,7 @@ function Navbar() {
 			<div className='container mx-auto flex h-full max-w-7xl items-center justify-between border-b'>
 				<div className='flex items-center gap-4'>
 					<Logo />
-					<div className='flex items-center gap-3 border-l pl-2'>
+					<div className='md:flex hidden items-center gap-3 border-l pl-2'>
 						{navLinks.map(nav => (
 							<Link
 								href={`/${nav.route}`}
@@ -29,8 +31,11 @@ function Navbar() {
 				</div>
 
 				<div className='flex items-center gap-2'>
-					<div className='flex items-center gap-2 border-r pr-3'>
-						<GlobalSearch />
+					<div className='flex items-center gap-2 md:border-r md:pr-3'>
+						<div className='md:flex hidden'>
+							<GlobalSearch />
+						</div>
+						<Mobile />
 						<ModeToggle />
 					</div>
 					<SignedIn>
@@ -38,15 +43,25 @@ function Navbar() {
 					</SignedIn>
 					<SignedOut>
 						<SignInButton mode='modal'>
-							<Button variant={'ghost'} size={'lg'} rounded={'full'}>
-								Log in
+							<Button
+								variant={'ghost'}
+								size={'lg'}
+								rounded={'full'}
+								className='md:flex hidden'
+							>
+								{'logIn'}
 							</Button>
 						</SignInButton>
 						<SignUpButton mode='modal'>
-							<Button size={'lg'} rounded={'full'}>
-								Sign Up
+							<Button size={'lg'} rounded={'full'} className='md:flex hidden'>
+								{'signUp'}
 							</Button>
 						</SignUpButton>
+						<SignInButton mode='modal'>
+							<Button variant={'ghost'} size={'icon'} className='md:hidden'>
+								<LogIn />
+							</Button>
+						</SignInButton>
 					</SignedOut>
 				</div>
 			</div>
